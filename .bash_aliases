@@ -16,4 +16,4 @@ alias art='php artisan'
 
 alias phpspec='vendor/bin/phpspec'
 alias phpunit='vendor/bin/phpunit'
-~                                          
+

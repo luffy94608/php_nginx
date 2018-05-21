@@ -36,4 +36,4 @@ server {
         deny all;
     }
 }
-~       
+
