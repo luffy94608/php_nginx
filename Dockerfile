@@ -73,6 +73,12 @@ COPY fastcgi_params /etc/nginx/
 RUN phpenmod mcrypt && \
     mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
 
+#install php yaf
+RUN pecl install yaf && \
+    echo "extension=yaf.so" >> /etc/php/7.0/mods-available/yaf.ini && \
+    ln -s "/etc/php/7.0/mods-available/yaf.ini" "/etc/php/7.0/fpm/conf.d/yaf.ini" && \
+    ln -s "/etc/php/7.0/mods-available/yaf.ini" "/etc/php/7.0/cli/conf.d/yaf.ini"
+
 # install composer
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
