@@ -52,27 +52,27 @@ FROM php:7.1-cli
 RUN docker-php-source extract \
     # do important things \
     #核心扩展
-    && docker-php-ext-install \
-        mcrypt \
-        gd \
-        mysqli \
-        pdo \
-        pdo_mysql \
-        pdo_pgsql \
-        pdo_sqlite \
-        mbstring \
-        soap \
-        curl \
-        pcntl \
-        tokenizer \
-        simplexml \
-        xml \
-        zip \
-        opcache \
-        apcu \
-        readline \
-        imap \
-        iconv \
+#    && docker-php-ext-install \
+#        mcrypt \
+#        gd \
+#        mysqli \
+#        pdo \
+#        pdo_mysql \
+#        pdo_pgsql \
+#        pdo_sqlite \
+#        mbstring \
+#        soap \
+#        curl \
+#        pcntl \
+#        tokenizer \
+#        simplexml \
+#        xml \
+#        zip \
+#        opcache \
+#        apcu \
+#        readline \
+#        imap \
+#        iconv \
 
     #pecl 扩展
     && pecl install redis \
