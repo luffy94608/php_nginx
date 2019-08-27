@@ -1,2 +1,4 @@
 # php_nginx 7.1
-docker php_nginx  file
+
+nginx 
+php 7.1 源码包
