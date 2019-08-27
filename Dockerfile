@@ -72,7 +72,7 @@ RUN docker-php-source extract \
         apcu \
         readline \
         imap \
-        iconv 
+        iconv \
 
     #pecl 扩展
     && pecl install redis \
