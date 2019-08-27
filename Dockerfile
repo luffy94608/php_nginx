@@ -20,7 +20,6 @@ RUN apt-get install -y software-properties-common curl build-essential \
 # add some repositories
 RUN apt-add-repository ppa:nginx/stable -y && \
     apt-add-repository ppa:ondrej/php -y && \
-
     apt-get update
 
 # set the locale
@@ -36,7 +35,7 @@ RUN apt-get install -y --force-yes nginx
 COPY homestead /etc/nginx/sites-available/
 RUN rm -rf /etc/nginx/sites-available/default && \
     rm -rf /etc/nginx/sites-enabled/default && \
-    ln -s "/etc/nginx/sites-available/homestead" "/etc/nginx/sites-enabled/homestead" && \
+    ln -fs "/etc/nginx/sites-available/homestead" "/etc/nginx/sites-enabled/homestead" && \
     sed -i -e"s/keepalive_timeout\s*65/keepalive_timeout 2/" /etc/nginx/nginx.conf && \
     sed -i -e"s/keepalive_timeout 2/keepalive_timeout 2;\n\tclient_max_body_size 100m/" /etc/nginx/nginx.conf && \
     echo "daemon off;" >> /etc/nginx/nginx.conf && \
