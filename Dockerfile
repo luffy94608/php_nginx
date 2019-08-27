@@ -75,11 +75,11 @@ RUN docker-php-source extract \
         iconv 
 
     #pecl 扩展
-    && pecl install redis
-    && pecl install memcached
-    && pecl install xdebug
-    && pecl install mongodb
-    && docker-php-ext-enable redis memcached xdebug mongodb
+    && pecl install redis \
+    && pecl install memcached \
+    && pecl install xdebug \
+    && pecl install mongodb \
+    && docker-php-ext-enable redis memcached xdebug mongodb \
      # cleanup
     && docker-php-source delete
 
