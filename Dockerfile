@@ -52,7 +52,7 @@ FROM php:7.1-cli
 RUN docker-php-source extract \
     # do important things \
     #核心扩展
-    && docker-php-ext-install -j$(nproc) \
+    && docker-php-ext-install \
         mcrypt \
         gd \
         mysqli \
