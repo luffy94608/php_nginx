@@ -41,9 +41,8 @@ RUN rm -rf /etc/nginx/sites-available/default && \
 #    usermod -u 1000 www-data && \
 #    chown -Rf www-data.www-data /var/www/html/ && \
 #    sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf && \
-    usermod -u 1000 www-data && \
-    chown -Rf www-data.www-data /var/www/html/ && \
+RUN usermod -u 1000 www-data && \
+    chown -R www-data.www-data /var/www/html/ && \
     sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf
 
 VOLUME ["/var/www/html/app"]
