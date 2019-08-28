@@ -19,7 +19,6 @@ RUN apt-get install -y software-properties-common curl build-essential \
 
 # add some repositories
 RUN apt-add-repository ppa:nginx/stable -y && \
-    apt-add-repository ppa:ondrej/php -y && \
     apt-get update
 
 # set the locale
@@ -48,9 +47,9 @@ VOLUME ["/var/log/nginx"]
 
 #install source php
 RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
-    && sudo apt install build-essential bison re2c pkg-config libxml2-dev libbz2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libfreetype6-dev libgmp-dev libreadline6-dev libxslt1-dev libzip-dev \
-    && tar zxvf php-7.1.4.tar.gz \
-    && cd php-7.1.4 \
+    && sudo apt install -y build-essential bison re2c pkg-config libxml2-dev libbz2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libfreetype6-dev libgmp-dev libreadline6-dev libxslt1-dev libzip-dev \
+    && tar zxvf php-7.1.31.tar.gz \
+    && cd php-7.1.31 \
     && ./configure --prefix=/usr/local/php \
         --with-curl \
         --with-freetype-dir \
@@ -87,6 +86,8 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
         --enable-zip \
     &&  make \
     &&  make install \
+    &&  echo "export PATH=/usr/local/php/bin:$PATH" >> /etc/profile \
+    &&  source /etc/profile \
     &&  cp php.ini-development /usr/local/php/lib/php.ini
 
 # install php
