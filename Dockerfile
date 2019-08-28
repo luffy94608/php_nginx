@@ -41,7 +41,7 @@ RUN rm -rf /etc/nginx/sites-available/default && \
 #    usermod -u 1000 www-data && \
 #    chown -Rf www-data.www-data /var/www/html/ && \
 #    sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf
-RUN mkdir /var/www/html/ && \
+RUN mkdir -p /var/www/html/ && \
     usermod -u 1000 www-data && \
     chown -R www-data.www-data /var/www/html/ && \
     sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf
