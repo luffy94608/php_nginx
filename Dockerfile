@@ -37,10 +37,15 @@ RUN rm -rf /etc/nginx/sites-available/default && \
     ln -fs "/etc/nginx/sites-available/homestead" "/etc/nginx/sites-enabled/homestead" && \
     sed -i -e"s/keepalive_timeout\s*65/keepalive_timeout 2/" /etc/nginx/nginx.conf && \
     sed -i -e"s/keepalive_timeout 2/keepalive_timeout 2;\n\tclient_max_body_size 100m/" /etc/nginx/nginx.conf && \
-    echo "daemon off;" >> /etc/nginx/nginx.conf && \
+#    echo "daemon off;" >> /etc/nginx/nginx.conf && \
+#    usermod -u 1000 www-data && \
+#    chown -Rf www-data.www-data /var/www/html/ && \
+#    sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf && \
     usermod -u 1000 www-data && \
     chown -Rf www-data.www-data /var/www/html/ && \
     sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf
+
 VOLUME ["/var/www/html/app"]
 VOLUME ["/var/cache/nginx"]
 VOLUME ["/var/log/nginx"]
@@ -89,6 +94,13 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     &&  echo "export PATH=/usr/local/php/bin:$PATH" >> /etc/profile \
     &&  source /etc/profile \
     &&  cp php.ini-development /usr/local/php/lib/php.ini
+
+RUN sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /usr/local/php/lib/php.ini && \
+    sed -i "s/display_errors = .*/display_errors = On/" /usr/local/php/lib/php.ini && \
+    sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /usr/local/php/lib/php.ini && \
+    sed -i "s/upload_max_filesize = .*/upload_max_filesize = 100M/" /usr/local/php/lib/php.ini && \
+    sed -i "s/post_max_size = .*/post_max_size = 100M/" /usr/local/php/lib/php.ini && \
+    sed -i "s/;date.timezone.*/date.timezone = UTC/" /usr/local/php/lib/php.ini
 
 # install php
 #RUN apt-get install -y --force-yes php7.1-fpm php7.1-cli php7.1-dev php7.1-gd \
