@@ -41,7 +41,8 @@ RUN rm -rf /etc/nginx/sites-available/default && \
 #    usermod -u 1000 www-data && \
 #    chown -Rf www-data.www-data /var/www/html/ && \
 #    sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf
-RUN mkdir -p /var/www/html/app && \
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf && \
+    mkdir -p /var/www/html/app && \
     usermod -u 1000 www-data && \
     chown -R www-data.www-data /var/www/html/ && \
     sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf
@@ -52,7 +53,7 @@ VOLUME ["/var/log/nginx"]
 
 #install source php
 RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
-    && sudo apt install -y build-essential bison re2c pkg-config libxml2-dev libbz2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libfreetype6-dev libgmp-dev libreadline6-dev libxslt1-dev libzip-dev \
+    && apt install -y build-essential bison re2c pkg-config libxml2-dev libbz2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libfreetype6-dev libgmp-dev libreadline6-dev libxslt1-dev libzip-dev \
     && tar zxvf php-7.1.31.tar.gz \
     && cd php-7.1.31 \
     && ./configure --prefix=/usr/local/php \
