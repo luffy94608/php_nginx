@@ -93,9 +93,8 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     &&  make \
     &&  make install \
     &&  echo "export PATH=/usr/local/php/bin:$PATH" >> /etc/profile \
-    &&  cp php.ini-development /usr/local/php/lib/php.ini
-
-RUN sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /usr/local/php/lib/php.ini && \
+    &&  cp php.ini-development /usr/local/php/lib/php.ini \
+    &&  sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /usr/local/php/lib/php.ini && \
     sed -i "s/display_errors = .*/display_errors = On/" /usr/local/php/lib/php.ini && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /usr/local/php/lib/php.ini && \
     sed -i "s/upload_max_filesize = .*/upload_max_filesize = 100M/" /usr/local/php/lib/php.ini && \
@@ -129,7 +128,7 @@ RUN sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /usr/local/php/lib/
 #    mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
 
 # install composer
-RUN curl -sS https://getcomposer.org/installer | php && \
+RUN curl -sS https://getcomposer.org/installer | /usr/local/php/bin/php && \
     mv composer.phar /usr/local/bin/composer && \
     printf "\nPATH=\"~/.composer/vendor/bin:\$PATH\"\n" | tee -a ~/.bashrc
 
