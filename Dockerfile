@@ -36,12 +36,8 @@ RUN rm -rf /etc/nginx/sites-available/default && \
     rm -rf /etc/nginx/sites-enabled/default && \
     ln -fs /etc/nginx/sites-available/homestead /etc/nginx/sites-enabled/homestead && \
     sed -i -e"s/keepalive_timeout\s*65/keepalive_timeout 2/" /etc/nginx/nginx.conf && \
-    sed -i -e"s/keepalive_timeout 2/keepalive_timeout 2;\n\tclient_max_body_size 100m/" /etc/nginx/nginx.conf
-#    echo "daemon off;" >> /etc/nginx/nginx.conf && \
-#    usermod -u 1000 www-data && \
-#    chown -Rf www-data.www-data /var/www/html/ && \
-#    sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf && \
+    sed -i -e"s/keepalive_timeout 2/keepalive_timeout 2;\n\tclient_max_body_size 100m/" /etc/nginx/nginx.conf && \
+    echo "daemon off;" >> /etc/nginx/nginx.conf && \
     mkdir -p /var/www/html/app && \
     usermod -u 1000 www-data && \
     chown -R www-data.www-data /var/www/html/ && \
