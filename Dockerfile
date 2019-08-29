@@ -53,7 +53,7 @@ VOLUME ["/var/log/nginx"]
 
 #install source php
 RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
-    && apt install -y build-essential bison re2c pkg-config libxml2-dev libbz2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libfreetype6-dev libgmp-dev libreadline6-dev libxslt1-dev libzip-dev \
+    && apt-get install -y build-essential bison re2c pkg-config libxml2-dev libbz2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libfreetype6-dev libgmp-dev libreadline6-dev libxslt1-dev libzip-dev \
     && tar zxvf php-7.1.31.tar.gz \
     && cd php-7.1.31 \
     && ./configure --prefix=/usr/local/php \
