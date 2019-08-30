@@ -130,7 +130,7 @@ RUN curl -sS https://getcomposer.org/installer | /usr/local/php/bin/php && \
     printf "\nPATH=\"~/.composer/vendor/bin:\$PATH\"\n" | tee -a ~/.bashrc
 
 #install laravel installer
-#RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com \
+RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
 #    && composer global require "laravel/installer"
 
 # install supervisor
