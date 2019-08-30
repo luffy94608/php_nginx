@@ -121,8 +121,8 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
 #    sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php/7.1/fpm/pool.d/www.conf && \
 #    find /etc/php/7.1/cli/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
 #COPY fastcgi_params /etc/nginx/
-#RUN phpenmod mcrypt && \
-#    mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
+RUN phpenmod mcrypt && \
+    mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
 
 # install composer
 RUN curl -sS https://getcomposer.org/installer | /usr/local/php/bin/php && \
