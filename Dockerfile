@@ -89,7 +89,7 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     &&  make \
     &&  make install \
     &&  echo "export PATH=/usr/local/php/bin:$PATH" >> /etc/profile \
-    &&  source /etc/profile \
+    &&  /bin/bash -c "source /etc/profile" \
     &&  cp php.ini-development /usr/local/php/lib/php.ini \
     &&  sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /usr/local/php/lib/php.ini && \
     sed -i "s/display_errors = .*/display_errors = On/" /usr/local/php/lib/php.ini && \
