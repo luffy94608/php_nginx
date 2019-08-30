@@ -133,6 +133,7 @@ RUN curl -sS https://getcomposer.org/installer | /usr/local/php/bin/php && \
 #RUN /bin/bash -c "composer config -g repo.packagist composer https://packagist.phpcomposer.com" \
 #    && /bin/bash -c "composer global require laravel/installer"
 
+
 # install supervisor
 RUN apt-get install -y supervisor && \
     mkdir -p /var/log/supervisor
