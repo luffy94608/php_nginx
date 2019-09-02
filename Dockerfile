@@ -149,10 +149,10 @@ RUN apt-get remove --purge -y software-properties-common && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /usr/share/man/?? && \
     rm -rf /usr/share/man/??_* && \
-    rm -rf /php-7.1.31* && \
+    rm -rf /php-7.1.31*
 
 # expose ports
-#EXPOSE 80 443
+EXPOSE 80 443
 
 # set container entrypoints
 ENTRYPOINT ["/bin/bash","-c"]
