@@ -101,6 +101,8 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     sed -i "s/;date.timezone.*/date.timezone = UTC/" /usr/local/php/lib/php.ini && \
     sed -i "s/;pid/pid/" /usr/local/php/etc/php-fpm.conf && \
     sed -i "s/;error_log/error_log/" /usr/local/php/etc/php-fpm.conf && \
+    sed -i "s/user = nobody/user = www-data/" /usr/local/php/etc/php-fpm.d/www.conf && \
+    sed -i "s/group = nobody/group = www-data/" /usr/local/php/etc/php-fpm.d/www.conf && \
     mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
 
 
