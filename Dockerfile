@@ -7,6 +7,8 @@ ENV APP_EMAIL app@laraedit.com
 ENV APP_DOMAIN app.dev
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
 # upgrade the container
 RUN apt-get update && \
     apt-get upgrade -y
@@ -15,7 +17,7 @@ RUN apt-get update && \
 RUN apt-get install -y software-properties-common curl build-essential \
     dos2unix gcc git libmcrypt4 libpcre3-dev memcached make python2.7-dev \
     python-pip re2c unattended-upgrades whois vim libnotify-bin nano wget \
-    debconf-utils pkg-config
+    debconf-utils pkg-config autoconf
 
 # add some repositories
 RUN apt-add-repository ppa:nginx/stable -y && \
@@ -89,7 +91,7 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     &&  make \
     &&  make install \
     &&  echo "export PATH=/usr/local/php/bin:$PATH" >> /etc/profile \
-    &&  /bin/bash -c "source /etc/profile" \
+    &&  source /etc/profile \
     &&  cp php.ini-development /usr/local/php/lib/php.ini \
     &&  cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf \
     &&  cp /usr/local/php/etc/php-fpm.d/www.conf.default /usr/local/php/etc/php-fpm.d/www.conf \
@@ -104,7 +106,16 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     sed -i "s/;error_log/error_log/" /usr/local/php/etc/php-fpm.conf && \
     sed -i "s/user = nobody/user = www-data/" /usr/local/php/etc/php-fpm.d/www.conf && \
     sed -i "s/group = nobody/group = www-data/" /usr/local/php/etc/php-fpm.d/www.conf && \
-    mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
+    mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php \
+    && cd .. \
+    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate http://pecl.php.net/get/redis-3.1.2.tgz redis-3.1.2.tgz \
+    && tar zxf redis-3.1.2.tgz redis-3.1.2 \
+    && cd redis-3.1.2 \
+    && /usr/local/php/bin/phpize \
+    && ./configure --with-php-config=/usr/local/php/bin/php-config \
+    && make \
+    && make install \
+    && echo 'extension=redis.so' >> /usr/local/php/lib/php.ini
 
 COPY fastcgi_params /etc/nginx/
 # install php
