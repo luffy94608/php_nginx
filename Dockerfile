@@ -17,7 +17,7 @@ RUN apt-get update && \
 RUN apt-get install -y software-properties-common curl build-essential \
     dos2unix gcc git libmcrypt4 libpcre3-dev memcached make python2.7-dev \
     python-pip re2c unattended-upgrades whois vim libnotify-bin nano wget \
-    debconf-utils pkg-config autoconf
+    debconf-utils pkg-config autoconf zip
 
 # add some repositories
 RUN apt-add-repository ppa:nginx/stable -y && \
@@ -50,6 +50,7 @@ VOLUME ["/var/cache/nginx"]
 VOLUME ["/var/log/nginx"]
 
 #install source php
+COPY redis-3.1.2.tgz /
 RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     && apt-get install -y build-essential bison re2c pkg-config libxml2-dev libbz2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libfreetype6-dev libgmp-dev libreadline6-dev libxslt1-dev libzip-dev \
     && tar zxvf php-7.1.31.tar.gz \
@@ -107,8 +108,7 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     sed -i "s/user = nobody/user = www-data/" /usr/local/php/etc/php-fpm.d/www.conf && \
     sed -i "s/group = nobody/group = www-data/" /usr/local/php/etc/php-fpm.d/www.conf && \
     mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php \
-    && cd .. \
-    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate http://pecl.php.net/get/redis-3.1.2.tgz redis-3.1.2.tgz \
+    && cd / \
     && tar zxf redis-3.1.2.tgz redis-3.1.2 \
     && cd redis-3.1.2 \
     && /usr/local/php/bin/phpize \
