@@ -169,7 +169,8 @@ RUN apt-get remove --purge -y software-properties-common && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /usr/share/man/?? && \
     rm -rf /usr/share/man/??_* && \
-    rm -rf /php-7.1.31*
+    rm -rf /php-7.1.31* && \
+    rm -rf /redis-3.1.2*
 
 # expose ports
 EXPOSE 80 443
