@@ -100,12 +100,13 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     sed -i "s/post_max_size = .*/post_max_size = 100M/" /usr/local/php/lib/php.ini && \
     sed -i "s/;date.timezone.*/date.timezone = UTC/" /usr/local/php/lib/php.ini && \
     sed -i "s/;pid/pid/" /usr/local/php/etc/php-fpm.conf && \
+    sed -i "s/;daemonize = yes/daemonize = no/" /usr/local/php/etc/php-fpm.conf && \
     sed -i "s/;error_log/error_log/" /usr/local/php/etc/php-fpm.conf && \
     sed -i "s/user = nobody/user = www-data/" /usr/local/php/etc/php-fpm.d/www.conf && \
     sed -i "s/group = nobody/group = www-data/" /usr/local/php/etc/php-fpm.d/www.conf && \
     mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
 
-
+COPY fastcgi_params /etc/nginx/
 # install php
 #RUN apt-get install -y --force-yes php7.1-fpm php7.1-cli php7.1-dev php7.1-gd \
 #    php-apcu php7.1-curl php7.1-mcrypt php7.1-imap php7.1-mysql php7.1-readline php-xdebug php-common \
