@@ -118,7 +118,6 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     && make \
     && make install \
     && echo 'extension=redis.so' >> /usr/local/php/lib/php.ini \
-
     && cd / \
     && touch /var/log/beast.log \
     && chown -R www-data:www-data /var/log/beast.log \
