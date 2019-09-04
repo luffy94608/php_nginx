@@ -51,6 +51,7 @@ VOLUME ["/var/log/nginx"]
 
 #install source php
 COPY redis-3.1.2.tgz /
+COPY php-beast-master.zip /
 RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     && apt-get install -y build-essential bison re2c pkg-config libxml2-dev libbz2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libfreetype6-dev libgmp-dev libreadline6-dev libxslt1-dev libzip-dev \
     && tar zxvf php-7.1.31.tar.gz \
@@ -116,7 +117,19 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     && ./configure --with-php-config=/usr/local/php/bin/php-config \
     && make \
     && make install \
-    && echo 'extension=redis.so' >> /usr/local/php/lib/php.ini
+    && echo 'extension=redis.so' >> /usr/local/php/lib/php.ini \
+
+    && cd / \
+    && touch /var/log/beast.log \
+    && chown -R www-data:www-data /var/log/beast.log \
+    && unzip php-beast-master.zip \
+    && cd php-beast-master \
+    && /usr/local/php/bin/phpize \
+    && ./configure --with-php-config=/usr/local/php/bin/php-config \
+    && make \
+    && make install \
+    && echo 'extension=beast.so' >> /usr/local/php/lib/php.ini \
+    && echo 'beast.log_file = /var/log/beast.log' >> /usr/local/php/lib/php.ini
 
 COPY fastcgi_params /etc/nginx/
 # install php
@@ -171,6 +184,7 @@ RUN apt-get remove --purge -y software-properties-common && \
     rm -rf /usr/share/man/?? && \
     rm -rf /usr/share/man/??_* && \
     rm -rf /php-7.1.31* && \
+    rm -rf /php-beast-master* && \
     rm -rf /redis-3.1.2*
 
 # expose ports
