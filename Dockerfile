@@ -108,6 +108,7 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     sed -i "s/user = nobody/user = www-data/" /usr/local/php/etc/php-fpm.d/www.conf && \
     sed -i "s/group = nobody/group = www-data/" /usr/local/php/etc/php-fpm.d/www.conf && \
     mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php \
+    && chown -R www-data:www-data /usr/local/php/var/ \
     && cd / \
     && tar zxf redis-3.1.2.tgz redis-3.1.2 \
     && cd redis-3.1.2 \
