@@ -93,7 +93,8 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     &&  make \
     &&  make install \
     &&  echo "export PATH=/usr/local/php/bin:$PATH" >> /etc/profile \
-    &&  source /etc/profile \
+#    &&  source /etc/profile \
+    &&  ln -s /usr/local/php/bin/* /usr/local/bin/ \
     &&  cp php.ini-development /usr/local/php/lib/php.ini \
     &&  cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf \
     &&  cp /usr/local/php/etc/php-fpm.d/www.conf.default /usr/local/php/etc/php-fpm.d/www.conf \
@@ -121,6 +122,7 @@ RUN wget http://am1.php.net/distributions/php-7.1.31.tar.gz \
     && cd / \
     && touch /var/log/beast.log \
     && chown -R www-data:www-data /var/log/beast.log \
+    && chmod 777 /var/log/beast.log \
     && unzip php-beast-master.zip \
     && cd php-beast-master \
     && /usr/local/php/bin/phpize \
